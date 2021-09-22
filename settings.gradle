@@ -1,0 +1,11 @@
+rootProject.name = "issueSimpleProject"
+include ':app'
+include ':module_aliyun:AlivcMedia'
+include ':module_aliyun:AliyunFileDownLoader:downloadermanager'
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+        settingsDir
+        , 'module_flutter/.android/include_flutter.groovy'
+))
+include ':module_flutter'
+include ':module_flutter_native'
