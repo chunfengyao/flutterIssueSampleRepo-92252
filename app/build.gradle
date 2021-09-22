@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
+static def getCurrentTime() {
+    return new Date().format("yyyyMMddHH", TimeZone.getTimeZone("Asia/Shanghai"))
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -18,6 +22,19 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。//阿里监控的  TLOG  还没有完全支持  arm64-v8a  ,如果需要的话，先去除  arm64-v8a  的ndk
+            //arm64-v8a   加固之后会过掉V8的平台。    armeabi的平台目前可以舍弃掉了。大部分库都在armeabi-v7a   里面。
+            abiFilters 'armeabi-v7a', 'armeabi', 'arm64-v8a'//, 'armeabi', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -43,6 +60,32 @@ android {
                         ".apk"
                 outputFileName = fileName
             }
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            applicationId "com.test1.powerbull"
+        }
+        _test {
+            applicationId "com.test2.powerbull"
+        }
+
+    }
+
+    splits {
+        // Configures multiple APKs based on ABI.
+        abi {
+            // Enables building multiple APKs per ABI.
+            enable true
+            // Resets the list of ABIs that Gradle should create APKs for to none.
+            reset()
+            // Specifies a list of ABIs that Gradle should create APKs for.
+            include "x86", "x86_64", "armeabi-v7a"
+//            include "armeabi"
+            // Specifies that we do not want to also generate a universal APK that includes all ABIs.
+            universalApk true//开启聚合包输出
         }
     }
 }
