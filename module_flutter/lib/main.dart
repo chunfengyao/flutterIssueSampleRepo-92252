@@ -1,4 +1,7 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_aliplayer/flutter_aliplayer.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,6 +11,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Type a = FlutterAliplayer.eventChannel.runtimeType;
+    Type b = Connectivity().runtimeType;
+    Type c = ImagePicker().runtimeType;
+    print("${a.hashCode}---${b.hashCode}---${c.hashCode}");
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

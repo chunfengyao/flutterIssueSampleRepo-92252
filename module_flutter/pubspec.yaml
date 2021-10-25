@@ -24,6 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  image_picker: any
+  #ali player
+  connectivity: ^3.0.6
+  flutter_aliplayer: any
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
